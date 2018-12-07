@@ -1,7 +1,7 @@
 {
-  "name": "record-list-item",
-  "version": "1.0.0",
-  "description": "record-list-item React component",
+  "name": "@cmds/record-list-item",
+  "version": "0.1.0",
+  "description": "Used for displaying a record as a list item.",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -11,6 +11,7 @@
     "umd"
   ],
   "scripts": {
+    "deploy": "cd demo/dist && surge --domain cmds-record-list-item.surge.sh",
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
@@ -24,6 +25,14 @@
     "react": "16.x"
   },
   "devDependencies": {
+    "@cmds/attachment-field": "^0.6.0",
+    "@cmds/checkbox-field": "^0.3.0",
+    "@cmds/link-to-another-record-field": "^0.2.0",
+    "@cmds/long-text-field": "^0.3.0",
+    "@cmds/multiple-select-field": "^0.6.0",
+    "@cmds/number-field": "^0.7.0",
+    "@cmds/single-line-text-field": "^0.6.0",
+    "@cmds/single-select-field": "^0.4.0",
     "nwb": "0.23.x",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
@@ -31,7 +40,7 @@
   "author": "",
   "homepage": "",
   "license": "MIT",
-  "repository": "",
+  "repository": "git@github.com:entercosmos/record-list-item.git",
   "keywords": [
     "react-component"
   ]

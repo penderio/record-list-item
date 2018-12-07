@@ -1,16 +1,79 @@
-# record-list-item
+# RecordListItem
 
-[![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
 
-Describe record-list-item here.
+Used for displaying a record as a list item.	
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+## Getting started
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
+````
+npm install @cmds/record-list-item --save
+````
 
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+### Prop Types
+
+| Property | Type | Required? | Description |
+|:---|:---|:---:|:---|
+| recordId | String | ✓ | Unique id for the instance of this record |
+| primaryFieldId | String | ✓ | Used for rendering the value of the primary field as record name |
+| fields | Array | ✓ | A list of fields |
+| visibleFieldOrder | Array | ✓ | A list of ids for the fields that need to be displayed and in which order |
+| fieldRenderer | Function | ✓ | Responsible for rendering a field given it's configuration: `({recordId: string, index: number, field: object}): jsx` [Learn more](#fieldRenderer) |
+
+#### fieldRenderer
+
+Responsible for rendering a field given it's configuration.
+
+```jsx harmony
+import SingleLineTextField from '@cmds/single-line-text-field'
+// import all other fields that need to be supported...
+
+const renderers = {
+    singleLineText: ({props}) => (
+        <SingleLineTextField
+            {...props}
+            text={'Luke Skywalker'}
+            onChange={({id, text}) => {
+                
+                // store new value
+            }}
+        />
+    ),
+    // and all other fields that need to be supported
+}
+
+function fieldRenderer({recordId, index, field, props}) {
+
+    const renderer = renderers[field.typeId]
+    
+    if (!renderer) {
+        throw new Error(`Renderer for typeId '${field.typeId}' not found`)
+    }
+    
+    /**
+     * Note — props already contains properties
+     * related to the context in which the field
+     * gets rendered.
+     * 
+     * {
+     *      id: 'fld1', // the field's id
+     *      contextId: 'recordListItem',
+     *      roleId: 'readOnly'
+     * }
+     */
+    
+    return renderer({ 
+        recordId, 
+        field,
+        props
+    })
+}
+```
+
+### More information
+
+This component is designed and developed as part of [Cosmos Design System][cmds]. 
+
+[cmds]: https://github.com/entercosmos/cosmos
+[npm-badge]: https://img.shields.io/npm/v/@cmds/record-list-item.svg
+[npm]: https://www.npmjs.org/package/@cmds/record-list-item
