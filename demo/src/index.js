@@ -366,7 +366,28 @@ class Demo extends Component {
                     `}
                 >
                     <RecordListItem
-                        recordId={'rec1'}
+                        id={'rec1'}
+                        name={'Luke Skywalker'}
+                        fields={FIELDS}
+                        visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
+                        fieldRenderer={fieldRenderer}
+                        onClick={({id}) => alert('onClick: ' + id)}
+                    />
+                </div>
+            </Viewport>
+            <h3>
+                Without onClick handler
+            </h3>
+            <Viewport>
+                <div
+                    className={css`
+                        width: 1200px;
+                        max-width: 100%;
+                        background-color: #fff;
+                    `}
+                >
+                    <RecordListItem
+                        id={'rec1'}
                         name={'Luke Skywalker'}
                         fields={FIELDS}
                         visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}

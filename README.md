@@ -19,6 +19,7 @@ npm install @cmds/record-list-item --save
 | fields | Array | ✓ | A list of fields |
 | visibleFieldOrder | Array | ✓ | A list of ids for the fields that need to be displayed and in which order |
 | fieldRenderer | Function | ✓ | Responsible for rendering a field given it's configuration: `({recordId: string, index: number, field: object}): jsx` [Learn more](#fieldRenderer) |
+| onClick | Function | ✓ | Triggers when the user clicks the record list item: `({id: string, e: ClickEvent})` |
 
 #### fieldRenderer
 
