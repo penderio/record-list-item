@@ -1,6 +1,6 @@
 {
   "name": "@cmds/record-list-item",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Used for displaying a record as a list item.",
   "main": "lib/index.js",
   "module": "es/index.js",

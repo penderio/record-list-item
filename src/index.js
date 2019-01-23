@@ -2,6 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {css, cx} from 'emotion'
 
+const defaultCellDataGetter = ({id, data}) => {
+    return data ? data[id] : undefined
+}
+
 export default class RecordListItem extends React.Component {
 
     static propTypes = {
@@ -17,12 +21,16 @@ export default class RecordListItem extends React.Component {
             PropTypes.string.isRequired
         ),
         fieldRenderer: PropTypes.func,
+        data: PropTypes.any,
+        cellDataGetter: PropTypes.func,
         onClick: PropTypes.func
     }
 
     render() {
 
         const {name, fieldRenderer, visibleFieldOrder, recordId} = this.props
+
+        const cellDataGetter = this.props.cellDataGetter || defaultCellDataGetter
 
         const fieldsById = this.props.fields.reduce((result, field) => {
             result[field.id] = field
@@ -161,6 +169,7 @@ export default class RecordListItem extends React.Component {
                                         index,
                                         recordId,
                                         field,
+                                        cellData: cellDataGetter({id: field.id, data: this.props.data}),
                                         props: {
                                             id: field.id,
                                             contextId: 'recordListItem',
