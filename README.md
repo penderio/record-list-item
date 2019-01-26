@@ -1,5 +1,7 @@
 # RecordListItem
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/entercosmos/record-list-item.svg)](https://greenkeeper.io/)
+
 [![npm package][npm-badge]][npm]
 
 Used for displaying a record as a list item.	
