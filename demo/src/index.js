@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import {Heading, Canvas, Paragraph, Box} from '@cmds/demo-utils'
 import sample from 'lodash/sample'
 import {css, injectGlobal} from 'emotion'
 
@@ -20,6 +21,7 @@ injectGlobal`
     }
     body {
         font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+        margin: 0;
     }
 `
 
@@ -255,23 +257,6 @@ const CELLS = {
     }
 }
 
-class Viewport extends React.Component {
-
-    render() {
-
-        return (
-            <div
-                className={css`
-                    background-color: #e9ebee;
-                    padding: 20px;
-                `}
-            >
-                {this.props.children}
-            </div>
-        )
-    }
-}
-
 const fieldRenderer = ({id, field, props}) => {
 
     const renderers = {
@@ -352,50 +337,33 @@ const fieldRenderer = ({id, field, props}) => {
 
 class Demo extends Component {
     render() {
-        return <div>
-            <h1>RecordListItem Demo</h1>
-            <h3>
-                All fields
-            </h3>
-            <Viewport>
-                <div
-                    className={css`
-                        width: 1200px;
-                        max-width: 100%;
-                        background-color: #fff;
-                    `}
-                >
-                    <RecordListItem
-                        id={'rec1'}
-                        name={'Luke Skywalker'}
-                        fields={FIELDS}
-                        visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                        fieldRenderer={fieldRenderer}
-                        onClick={({id}) => alert('onClick: ' + id)}
-                    />
-                </div>
-            </Viewport>
-            <h3>
-                Without onClick handler
-            </h3>
-            <Viewport>
-                <div
-                    className={css`
-                        width: 1200px;
-                        max-width: 100%;
-                        background-color: #fff;
-                    `}
-                >
-                    <RecordListItem
-                        id={'rec1'}
-                        name={'Luke Skywalker'}
-                        fields={FIELDS}
-                        visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                        fieldRenderer={fieldRenderer}
-                    />
-                </div>
-            </Viewport>
-        </div>
+        return <Canvas>
+            <Paragraph>
+                Default
+            </Paragraph>
+            <Box>
+                <RecordListItem
+                    id={'rec1'}
+                    name={'Luke Skywalker'}
+                    fields={FIELDS}
+                    visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
+                    fieldRenderer={fieldRenderer}
+                    onClick={({id}) => alert('onClick: ' + id)}
+                />
+            </Box>
+            <Paragraph>
+                Read only (no click handling)
+            </Paragraph>
+            <Box>
+                <RecordListItem
+                    id={'rec1'}
+                    name={'Luke Skywalker'}
+                    fields={FIELDS}
+                    visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
+                    fieldRenderer={fieldRenderer}
+                />
+            </Box>
+        </Canvas>
     }
 }
 
