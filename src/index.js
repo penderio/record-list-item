@@ -56,12 +56,15 @@ export default class RecordListItem extends React.Component {
                         display: flex;
                         background-color: #fff;
                         border-radius: 6px;
-                        box-shadow: 0 0 0 1px rgba(114,121,133,.3);
+                        box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
                     `,
                     this.props.onClick ? css`
                         cursor: pointer;
                         &:hover {
-                            box-shadow: 0 0 0 1px rgba(114,121,133,.5);
+                            box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px 0px;
+                        }
+                        &:active {
+                            box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
                         }
                     ` : null
                 )}
