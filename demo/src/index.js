@@ -245,37 +245,37 @@ const CELLS = {
     }
 }
 
-const fieldRenderer = ({ id, field, props }) => {
+const fieldRenderer = (empty) => ({ id, field, props }) => {
 
     const renderers = {
         singleLineText: ({ props, cell }) => (
             <SingleLineTextField
                 {...props}
-                text={cell.text}
+                text={empty ? null : cell.text}
             />
         ),
         longText: ({ props, cell }) => (
             <LongTextField
                 {...props}
-                longText={cell.longText}
+                longText={empty ? null : cell.longText}
             />
         ),
         checkbox: ({ props, cell }) => (
             <CheckboxField
                 {...props}
-                checked={cell.checked}
+                checked={empty ? null : cell.checked}
             />
         ),
         attachment: ({ props, cell }) => (
             <AttachmentField
                 {...props}
-                attachments={cell.attachments}
+                attachments={empty ? null : cell.attachments}
             />
         ),
         linkToAnotherRecord: ({ props, cell }) => (
             <LinkToAnotherRecordField
                 {...props}
-                recordCount={cell.records.length}
+                recordCount={empty ? null : cell.records.length}
                 recordGetter={({ index }) => {
                     return cell.records[index]
                 }}
@@ -285,7 +285,7 @@ const fieldRenderer = ({ id, field, props }) => {
         multipleSelect: ({ props, field, cell }) => (
             <MultipleSelectField
                 {...props}
-                optionIds={cell.optionIds}
+                optionIds={empty ? null : cell.optionIds}
                 options={field.options.options}
                 coloredOptions={field.options.coloredOptions}
             />
@@ -293,7 +293,7 @@ const fieldRenderer = ({ id, field, props }) => {
         singleSelect: ({ props, field, cell }) => (
             <SingleSelectField
                 {...props}
-                optionId={cell.optionId}
+                optionId={empty ? null : cell.optionId}
                 options={field.options.options}
                 coloredOptions={field.options.coloredOptions}
             />
@@ -301,7 +301,7 @@ const fieldRenderer = ({ id, field, props }) => {
         number: ({ props, field, cell }) => (
             <NumberField
                 {...props}
-                number={cell.number}
+                number={empty ? null : cell.number}
                 allowNegativeNumbers={field.options.allowNegativeNumbers}
                 numberFormatId={field.options.numberFormatId}
                 precisionId={field.options.precisionId}
@@ -337,7 +337,7 @@ class Demo extends Component {
                     name={'Luke Skywalker'}
                     fields={FIELDS}
                     visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                    fieldRenderer={fieldRenderer}
+                    fieldRenderer={fieldRenderer(false)}
                     onClick={({ id }) => alert('onClick: ' + id)}
                 />
             </Box>
@@ -350,7 +350,20 @@ class Demo extends Component {
                     name={'Luke Skywalker'}
                     fields={FIELDS}
                     visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                    fieldRenderer={fieldRenderer}
+                    fieldRenderer={fieldRenderer(false)}
+                />
+            </Box>
+            <Paragraph>
+                With empty values
+            </Paragraph>
+            <Box>
+                <RecordListItem
+                    id={'rec1'}
+                    name={'Luke Skywalker'}
+                    fields={FIELDS}
+                    visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
+                    fieldRenderer={fieldRenderer(true)}
+                    onClick={({ id }) => alert('onClick: ' + id)}
                 />
             </Box>
         </Canvas>
