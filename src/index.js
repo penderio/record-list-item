@@ -120,6 +120,7 @@ export default class RecordListItem extends React.Component {
                             display: -webkit-flex;
                             display: -ms-flexbox;
                             display: flex;
+                            font-size: 13px;
                         `}
                     >
                         {fields.map((field, index) => (

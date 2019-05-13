@@ -1,17 +1,17 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
-import {Heading, Canvas, Paragraph, Box} from '@cmds/demo-utils'
+import React, { Component } from 'react'
+import { render } from 'react-dom'
+import { Heading, Canvas, Paragraph, Box } from '@pndr/demo-utils'
 import sample from 'lodash/sample'
-import {css, injectGlobal} from 'emotion'
+import { css, injectGlobal } from 'emotion'
 
-import CheckboxField from '@cmds/checkbox-field'
-import AttachmentField from '@cmds/attachment-field'
-import LongTextField from '@cmds/long-text-field'
-import SingleLineTextField from '@cmds/single-line-text-field'
-import SingleSelectField from '@cmds/single-select-field'
-import MultipleSelectField from '@cmds/multiple-select-field'
-import NumberField from '@cmds/number-field'
-import LinkToAnotherRecordField from '@cmds/link-to-another-record-field'
+import CheckboxField from '@pndr/checkbox-field'
+import AttachmentField from '@pndr/attachment-field'
+import LongTextField from '@pndr/long-text-field'
+import SingleLineTextField from '@pndr/single-line-text-field'
+import SingleSelectField from '@pndr/single-select-field'
+import MultipleSelectField from '@pndr/multiple-select-field'
+import NumberField from '@pndr/number-field'
+import LinkToAnotherRecordField from '@pndr/link-to-another-record-field'
 
 import RecordListItem from '../../src'
 
@@ -42,7 +42,7 @@ const generateAttachment = (i) => {
 
     return {
         id: `att${i}`,
-        type: 'image/jpeg',
+        typeId: 'image/jpeg',
         filename: `${cat} ${i}`,
         thumbnails: {
             small: {
@@ -90,39 +90,33 @@ const FIELDS = [{
     typeId: 'multipleSelect',
     options: {
         coloredOptions: true,
-        optionOrder: ['opt1', 'opt2', 'opt3', 'opt4', 'opt5', 'opt6'],
-        options: {
-            'opt1': {
+        options: [
+            {
                 id: 'opt1',
                 colorId: 'blue.base',
                 name: 'Blue'
-            },
-            'opt2': {
+            }, {
                 id: 'opt2',
                 colorId: 'green.base',
                 name: 'Green'
-            },
-            'opt3': {
+            }, {
                 id: 'opt3',
                 colorId: 'red.base',
                 name: 'Red'
-            },
-            'opt4': {
+            }, {
                 id: 'opt4',
                 colorId: 'yellow.base',
                 name: 'Yellow'
-            },
-            'opt5': {
+            }, {
                 id: 'opt5',
                 colorId: 'indigo.base',
                 name: 'Indigo'
-            },
-            'opt6': {
+            }, {
                 id: 'opt6',
                 colorId: 'purple.base',
                 name: 'Purple'
             }
-        }
+        ]
     }
 }, {
     id: 'fld7',
@@ -130,39 +124,33 @@ const FIELDS = [{
     typeId: 'singleSelect',
     options: {
         coloredOptions: true,
-        optionOrder: ['opt1', 'opt2', 'opt3', 'opt4', 'opt5', 'opt6'],
-        options: {
-            'opt1': {
+        options: [
+            {
                 id: 'opt1',
                 colorId: 'blue.base',
                 name: 'Blue'
-            },
-            'opt2': {
+            }, {
                 id: 'opt2',
                 colorId: 'green.base',
                 name: 'Green'
-            },
-            'opt3': {
+            }, {
                 id: 'opt3',
                 colorId: 'red.base',
                 name: 'Red'
-            },
-            'opt4': {
+            }, {
                 id: 'opt4',
                 colorId: 'yellow.base',
                 name: 'Yellow'
-            },
-            'opt5': {
+            }, {
                 id: 'opt5',
                 colorId: 'indigo.base',
                 name: 'Indigo'
-            },
-            'opt6': {
+            }, {
                 id: 'opt6',
                 colorId: 'purple.base',
                 name: 'Purple'
             }
-        }
+        ]
     }
 }, {
     id: 'fld8',
@@ -257,58 +245,60 @@ const CELLS = {
     }
 }
 
-const fieldRenderer = ({id, field, props}) => {
+const fieldRenderer = ({ id, field, props }) => {
 
     const renderers = {
-        singleLineText: ({props, cell}) => (
+        singleLineText: ({ props, cell }) => (
             <SingleLineTextField
                 {...props}
                 text={cell.text}
             />
         ),
-        longText: ({props, cell}) => (
+        longText: ({ props, cell }) => (
             <LongTextField
                 {...props}
                 longText={cell.longText}
             />
         ),
-        checkbox: ({props, cell}) => (
+        checkbox: ({ props, cell }) => (
             <CheckboxField
                 {...props}
                 checked={cell.checked}
             />
         ),
-        attachment: ({props, cell}) => (
+        attachment: ({ props, cell }) => (
             <AttachmentField
                 {...props}
                 attachments={cell.attachments}
             />
         ),
-        linkToAnotherRecord: ({props, cell}) => (
+        linkToAnotherRecord: ({ props, cell }) => (
             <LinkToAnotherRecordField
                 {...props}
-                records={cell.records}
+                recordCount={cell.records.length}
+                recordGetter={({ index }) => {
+                    return cell.records[index]
+                }}
+                recordRenderer={() => null}
             />
         ),
-        multipleSelect: ({props, field, cell}) => (
+        multipleSelect: ({ props, field, cell }) => (
             <MultipleSelectField
                 {...props}
                 optionIds={cell.optionIds}
                 options={field.options.options}
-                optionOrder={field.options.optionOrder}
                 coloredOptions={field.options.coloredOptions}
             />
         ),
-        singleSelect: ({props, field, cell}) => (
+        singleSelect: ({ props, field, cell }) => (
             <SingleSelectField
                 {...props}
                 optionId={cell.optionId}
                 options={field.options.options}
-                optionOrder={field.options.optionOrder}
                 coloredOptions={field.options.coloredOptions}
             />
         ),
-        number: ({props, field, cell}) => (
+        number: ({ props, field, cell }) => (
             <NumberField
                 {...props}
                 number={cell.number}
@@ -348,7 +338,7 @@ class Demo extends Component {
                     fields={FIELDS}
                     visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
                     fieldRenderer={fieldRenderer}
-                    onClick={({id}) => alert('onClick: ' + id)}
+                    onClick={({ id }) => alert('onClick: ' + id)}
                 />
             </Box>
             <Paragraph>
@@ -367,4 +357,4 @@ class Demo extends Component {
     }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'))
