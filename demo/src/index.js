@@ -354,6 +354,18 @@ class Demo extends Component {
                 />
             </Box>
             <Paragraph>
+                No name
+            </Paragraph>
+            <Box>
+                <RecordListItem
+                    id={'rec1'}
+                    name={null}
+                    fields={FIELDS}
+                    visibleFieldOrder={['fld1', 'fld2', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
+                    fieldRenderer={fieldRenderer(false)}
+                />
+            </Box>
+            <Paragraph>
                 With empty values
             </Paragraph>
             <Box>

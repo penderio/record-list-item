@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {css, cx} from 'emotion'
+import { css, cx } from 'emotion'
 
-const defaultCellDataGetter = ({id, data}) => {
+import RecordTitle from './RecordTitle'
+import defaultEmptyNameRenderer from './defaultEmptyNameRenderer'
+
+const defaultCellDataGetter = ({ id, data }) => {
     return data ? data[id] : undefined
 }
 
@@ -23,14 +26,21 @@ export default class RecordListItem extends React.Component {
         fieldRenderer: PropTypes.func,
         data: PropTypes.any,
         cellDataGetter: PropTypes.func,
-        onClick: PropTypes.func
+        onClick: PropTypes.func,
+        emptyNameRenderer: PropTypes.func,
+        emptyNamePlaceholder: PropTypes.string
+    }
+
+    static defaultProps = {
+        emptyNamePlaceholder: 'Untitled'
     }
 
     render() {
 
-        const {name, fieldRenderer, visibleFieldOrder, recordId} = this.props
+        const { name, fieldRenderer, visibleFieldOrder, recordId, emptyNamePlaceholder } = this.props
 
         const cellDataGetter = this.props.cellDataGetter || defaultCellDataGetter
+        const emptyNameRenderer = this.props.emptyNameRenderer || defaultEmptyNameRenderer
 
         const fieldsById = this.props.fields.reduce((result, field) => {
             result[field.id] = field
@@ -102,15 +112,15 @@ export default class RecordListItem extends React.Component {
                             className={css`
                                 width: 100%;
                                 margin-bottom: 8px;
-                                font-size: 16px;
-                                max-width: 100%;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                                font-weight: 600;
                             `}
                         >
-                            {name}
+                            {name ? (
+                                <RecordTitle>
+                                    {name}
+                                </RecordTitle>
+                            ) : emptyNameRenderer({
+                                placeholder: emptyNamePlaceholder
+                            })}
                         </div>
                     </div>
                     <div
@@ -173,7 +183,7 @@ export default class RecordListItem extends React.Component {
                                         index,
                                         recordId,
                                         field,
-                                        cellData: cellDataGetter({id: field.id, data: this.props.data}),
+                                        cellData: cellDataGetter({ id: field.id, data: this.props.data }),
                                         props: {
                                             id: field.id,
                                             contextId: 'recordListItem',
